@@ -1,0 +1,36 @@
+{
+  "name": "vildanbina/laravel-model-json",
+  "description": "Laravel Model Json",
+  "keywords": [
+    "laravel",
+    "model-export",
+    "json-export"
+  ],
+  "homepage": "https://github.com/vildanbina/laravel-model-json",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vildan Bina",
+      "email": "vildanbina@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0|^8.1",
+    "spatie/laravel-package-tools": "^1.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vildanbina\\LivewireWizard\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Vildanbina\\LivewireWizard\\ModelJsonServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
