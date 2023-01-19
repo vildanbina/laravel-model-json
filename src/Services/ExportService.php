@@ -25,6 +25,21 @@ class ExportService extends JsonService
      * @var Closure|null
      */
     protected null|Closure $onEach = null;
+    /**
+     * @var bool
+     */
+    protected bool $beautifyJson = false;
+
+    /**
+     * @param  bool  $beautifyJson
+     *
+     * @return $this
+     */
+    public function beautifyJson(bool $beautifyJson): static
+    {
+        $this->beautifyJson = $beautifyJson;
+        return $this;
+    }
 
     /**
      * @param  Closure  $onEach
@@ -60,7 +75,7 @@ class ExportService extends JsonService
             $data[] = $value;
         });
 
-        $jsonData = json_encode($data, JSON_PRETTY_PRINT);
+        $jsonData = json_encode($data, $this->beautifyJson ? JSON_PRETTY_PRINT : 0);
         $fileName = $this->getFilename();
 
         return $this->saveToDestination($fileName, $jsonData);
