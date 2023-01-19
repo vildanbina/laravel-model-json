@@ -52,6 +52,9 @@ trait HasModel
      */
     protected function modelQuery(): Builder
     {
-        return $this->model::query();
+        return $this->model::query()
+            ->when(filled($relations = $this->getRelationships()), function (Builder $builder) use ($relations) {
+                $builder->with($relations);
+            });
     }
 }

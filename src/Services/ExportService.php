@@ -8,6 +8,7 @@ use Vildanbina\ModelJson\Traits\ColumnManipulator;
 use Vildanbina\ModelJson\Traits\HasDestinationPath;
 use Vildanbina\ModelJson\Traits\HasFilename;
 use Vildanbina\ModelJson\Traits\HasModel;
+use Vildanbina\ModelJson\Traits\HasRelationships;
 
 /**
  * Class ExportService
@@ -20,6 +21,7 @@ class ExportService extends JsonService
     use HasFilename;
     use HasDestinationPath;
     use ColumnManipulator;
+    use HasRelationships;
 
     /**
      * @var Closure|null

@@ -41,6 +41,7 @@ class ExportModelData extends Command
             ->setExceptColumns($this->option('except-fields'))
             ->setOnlyColumns($this->option('only-fields'))
             ->withoutTimestamps($this->option('without-timestamps'))
+            ->setRelationships($this->option('with-relationships'))
             ->beautifyJson($this->option('beautify') ?: false)
             ->onEach(function () {
                 $this->output->progressAdvance();
@@ -100,6 +101,7 @@ class ExportModelData extends Command
             ['only-fields', null, InputOption::VALUE_OPTIONAL, 'Only columns that you want to save in a JSON file.'],
             ['without-timestamps', null, InputOption::VALUE_NONE, 'Export without: created_at, updated_at and deleted_at columns'],
             ['beautify', '-b', InputOption::VALUE_NONE, 'Beautify JSON'],
+            ['with-relationships', null, InputOption::VALUE_OPTIONAL, 'Relationships to include (plus-separator)'],
         ];
     }
 }
