@@ -21,13 +21,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Vildanbina\\LivewireWizard\\": "src"
+      "Vildanbina\\ModelJson\\": "src"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Vildanbina\\LivewireWizard\\ModelJsonServiceProvider"
+        "Vildanbina\\ModelJson\\ModelJsonServiceProvider"
       ]
     }
   },
