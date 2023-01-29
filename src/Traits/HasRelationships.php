@@ -12,7 +12,7 @@ trait HasRelationships
     /**
      * @var string|array|null
      */
-    protected null|string|array $relationships;
+    protected null|string|array $relationships = [];
 
     /**
      * @return array|string|null

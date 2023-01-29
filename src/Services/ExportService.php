@@ -3,8 +3,8 @@
 namespace Vildanbina\ModelJson\Services;
 
 use Arr;
-use Closure;
 use Vildanbina\ModelJson\Traits\ColumnManipulator;
+use Vildanbina\ModelJson\Traits\EachClosure;
 use Vildanbina\ModelJson\Traits\HasDestinationPath;
 use Vildanbina\ModelJson\Traits\HasFilename;
 use Vildanbina\ModelJson\Traits\HasModel;
@@ -22,11 +22,8 @@ class ExportService extends JsonService
     use HasDestinationPath;
     use ColumnManipulator;
     use HasRelationships;
+    use EachClosure;
 
-    /**
-     * @var Closure|null
-     */
-    protected null|Closure $onEach = null;
     /**
      * @var bool
      */
@@ -40,17 +37,6 @@ class ExportService extends JsonService
     public function beautifyJson(bool $beautifyJson): static
     {
         $this->beautifyJson = $beautifyJson;
-        return $this;
-    }
-
-    /**
-     * @param  Closure  $onEach
-     *
-     * @return $this
-     */
-    public function onEach(Closure $onEach): static
-    {
-        $this->onEach = $onEach;
         return $this;
     }
 

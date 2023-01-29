@@ -5,6 +5,7 @@ namespace Vildanbina\ModelJson;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Vildanbina\ModelJson\Commands\ExportModelData;
+use Vildanbina\ModelJson\Commands\ImportModelData;
 
 /**
  * Class ModelJsonServiceProvider
@@ -22,6 +23,9 @@ class ModelJsonServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-model-json')
-            ->hasCommand(ExportModelData::class);
+            ->hasCommands([
+                ExportModelData::class,
+                ImportModelData::class,
+            ]);
     }
 }

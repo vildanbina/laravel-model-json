@@ -3,6 +3,7 @@
 namespace Vildanbina\ModelJson\Traits;
 
 use File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -13,24 +14,18 @@ use Illuminate\Support\Facades\Storage;
 trait HasDestinationPath
 {
     /**
-     * @var bool
-     */
-    protected bool $shouldSaveToPath = false;
-    /**
      * @var string|null
      */
-    protected null|string $savePath = null;
+    protected null|string $path = null;
 
     /**
-     * @param  string|null  $savePath
-     * @param  bool         $shouldSaveToPath
+     * @param  string|null  $path
      *
      * @return $this
      */
-    public function shouldSaveToPath(null|string $savePath = null, bool $shouldSaveToPath = true): static
+    public function setPath(null|string $path = null): static
     {
-        $this->savePath         = $savePath;
-        $this->shouldSaveToPath = $shouldSaveToPath;
+        $this->path = $path;
 
         return $this;
     }
@@ -43,16 +38,12 @@ trait HasDestinationPath
      */
     public function saveToDestination(string $fileName, string $jsonData): string|bool
     {
-        if ($this->shouldSaveToPath) {
-            File::put(
-                $path = $this->getDestinationPath($fileName . '.json'),
-                $jsonData
-            );
+        File::put(
+            $path = $this->getDestinationPath($fileName . '.json'),
+            $jsonData
+        );
 
-            return $path;
-        }
-
-        return false;
+        return $path;
     }
 
     /**
@@ -62,6 +53,27 @@ trait HasDestinationPath
      */
     protected function getDestinationPath(string $path = ''): string
     {
-        return $this->savePath ? base_path($this->savePath . '\\' . $path) : Storage::path($path);
+        return $this->path ? base_path($this->path . (filled($path) ? '\\' . $path : '')) : Storage::path($path);
+    }
+
+    /**
+     * @param  string  $path
+     *
+     * @return array
+     */
+    protected function getJsonAsArray(string $path = ''): array
+    {
+        return json_decode($this->getFileContent($path), true);
+    }
+
+    /**
+     * @param  string  $path
+     *
+     * @return string
+     * @throws FileNotFoundException
+     */
+    protected function getFileContent(string $path = ''): string
+    {
+        return File::get($path ?: $this->getDestinationPath());
     }
 }
