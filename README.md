@@ -129,7 +129,7 @@ For example, to import data for the `User` model, you would run the following co
 Example:
 
 ```bash
-php artisan model:import User --path=public/Users.json
+php artisan model:import User public/Users.json
 ```
 
 This command will store all the data found in the JSON file in the database.
@@ -139,7 +139,7 @@ This command will store all the data found in the JSON file in the database.
 You can exclude specific columns by using the `--except-fields` option, separated by commas, ex:
 
 ```bash
-php artisan model:import User --path=public/Users.json --except-fields=email_verified_at
+php artisan model:import User public/Users.json --except-fields=email_verified_at
 ```
 
 You can also exclude timestamps by using the `--without-timestamps` option.
@@ -149,7 +149,7 @@ You can also exclude timestamps by using the `--without-timestamps` option.
 If you only want to store specific fields, you can use the `--only-fields` option, separated by commas. Ex:
 
 ```bash
-php artisan model:import User --path=public/Users.json --only-fields=first_name,last_name,email
+php artisan model:import User public/Users.json --only-fields=first_name,last_name,email
 ```
 
 ## Update existing records
@@ -157,13 +157,13 @@ php artisan model:import User --path=public/Users.json --only-fields=first_name,
 You can update existing records in the database instead of creating duplicates by using the `--update-when-exists` option, ex:
 
 ```bash
-php artisan model:import User --path=public/Users.json --update-when-exists
+php artisan model:import User public/Users.json --update-when-exists
 ```
 
 If you want to group the updates based on a different column, you can use the `--update-keys option`. The records will be updated based on the matching existing records.
 
 ```bash
-php artisan model:import User --path=public/Users.json --update-when-exists --update-keys=email
+php artisan model:import User public/Users.json --update-when-exists --update-keys=email
 ```
 
 Note: The `--update-when-exists` option must be present in order for the update feature to be enabled.
