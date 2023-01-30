@@ -18,7 +18,7 @@ composer require vildanbina/laravel-model-json
 
 ## Usage
 
-# Import
+# Export
 
 The command to export data from a model is `php artisan model:export {model}`, where `{model}` is the class name of the model you wish to export. After running this command, the data will be automatically saved in the `storage/app` folder.
 
