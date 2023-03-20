@@ -80,11 +80,11 @@ class ImportService extends JsonService
             }
 
             if ($this->updateWhenExists) {
-                $item = filled($this->updateKeys) ? $this->updateKeys : (new $this->model)->getKeyName();
+                $updateKeys = filled($this->updateKeys) ? $this->updateKeys : (new $this->model)->getKeyName();
 
                 $this->model::updateOrCreate(
-                    Arr::only($item, $item),
-                    Arr::except($item, $item),
+                    Arr::only($item, $updateKeys),
+                    Arr::except($item, $updateKeys),
                 );
             } else {
                 $this->model::create($item);
