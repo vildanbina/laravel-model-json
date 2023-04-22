@@ -8,7 +8,7 @@ use Vildanbina\ModelJson\Traits\EachClosure;
 use Vildanbina\ModelJson\Traits\HasDestinationPath;
 use Vildanbina\ModelJson\Traits\HasFilename;
 use Vildanbina\ModelJson\Traits\HasModel;
-use Vildanbina\ModelJson\Traits\HasRelationships;
+use Vildanbina\ModelJson\Traits\ImportingWithRelationships;
 
 /**
  * Class ImportService
@@ -21,7 +21,7 @@ class ImportService extends JsonService
     use HasFilename;
     use HasDestinationPath;
     use ColumnManipulator;
-    use HasRelationships;
+    use ImportingWithRelationships;
     use EachClosure;
 
     /**
@@ -82,13 +82,15 @@ class ImportService extends JsonService
             if ($this->updateWhenExists) {
                 $updateKeys = filled($this->updateKeys) ? $this->updateKeys : (new $this->model)->getKeyName();
 
-                $this->model::updateOrCreate(
+                $model = $this->model::updateOrCreate(
                     Arr::only($item, $updateKeys),
                     Arr::except($item, $updateKeys),
                 );
             } else {
-                $this->model::create($item);
+                $model = $this->model::create($item);
             }
+
+            $this->importRelationships($model, $item, $this->getRelationships());
         });
 
         return true;
