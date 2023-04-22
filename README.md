@@ -168,6 +168,51 @@ php artisan model:import User public/Users.json --update-when-exists --update-ke
 
 Note: The `--update-when-exists` option must be present in order for the update feature to be enabled.
 
+## Relationships
+
+In addition to importing models from JSON, this package also allows you to import relationships between models.
+Currently supported relationship types are:
+
+- HasOne
+- HasMany
+- HasOneThrough
+- HasManyThrough
+- MorphOne
+- MorphMany
+- MorphToMany
+- MorphTo
+- BelongsTo
+- BelongsToMany
+
+You can import models along with their specified relationships using the new
+option `--with-relationships={relations}`. `{relations}` are the names of the relationships and can be separated by `+`
+symbol if you want to attach more than one relationship.
+
+For example, if you want to import a Category model along with its Product relationship, you can use the command:
+
+```bash
+php artisan model:import Category public/Categories.json --with-relationships=products
+```
+
+If you want to import a Category model along with both its Product and User relationships, you can use the command:
+
+```bash
+php artisan model:import Category public/Categories.json --with-relationships=products+user
+```
+
+Additionally, you can choose to only import specific columns of the relationship by using the
+syntax `{relationship_name}:{columns_to_import}`.
+
+For example, if you want to import a `Category` model along with its `Product` relationship and only import the `id`
+and `name` columns of the `Product`, you can use the command:
+
+```bash
+php artisan model:import Category public/Categories.json --with-relationships=products:id,name
+```
+
+**Note:** In addition to the assignment that will be done in the above examples for importing a product to a category with relationships, Category will also be updated with the attributes found in the JSON.
+
+
 ---
 
 ## Conclusion
