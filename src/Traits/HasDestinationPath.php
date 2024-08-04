@@ -53,7 +53,7 @@ trait HasDestinationPath
      */
     protected function getDestinationPath(string $path = ''): string
     {
-        return $this->path ? base_path($this->path . (filled($path) ? '\\' . $path : '')) : Storage::path($path);
+        return $this->path ? base_path($this->path . (filled($path) ? DIRECTORY_SEPARATOR . $path : '')) : Storage::path($path);
     }
 
     /**
