@@ -1,8 +1,8 @@
-[![Latest Stable Version](http://poser.pugx.org/vildanbina/laravel-model-json/v)](https://packagist.org/packages/vildanbina/laravel-model-json)
-[![Total Downloads](http://poser.pugx.org/vildanbina/laravel-model-json/downloads)](https://packagist.org/packages/vildanbina/laravel-model-json)
-[![Latest Unstable Version](http://poser.pugx.org/vildanbina/laravel-model-json/v/unstable)](https://packagist.org/packages/vildanbina/laravel-model-json)
-[![License](http://poser.pugx.org/vildanbina/laravel-model-json/license)](https://packagist.org/packages/vildanbina/laravel-model-json)
-[![PHP Version Require](http://poser.pugx.org/vildanbina/laravel-model-json/require/php)](https://packagist.org/packages/vildanbina/laravel-model-json)
+[![Latest Stable Version](https://poser.pugx.org/vildanbina/laravel-model-json/v)](https://packagist.org/packages/vildanbina/laravel-model-json)
+[![Total Downloads](https://poser.pugx.org/vildanbina/laravel-model-json/downloads)](https://packagist.org/packages/vildanbina/laravel-model-json)
+[![Latest Unstable Version](https://poser.pugx.org/vildanbina/laravel-model-json/v/unstable)](https://packagist.org/packages/vildanbina/laravel-model-json)
+[![License](https://poser.pugx.org/vildanbina/laravel-model-json/license)](https://packagist.org/packages/vildanbina/laravel-model-json)
+[![PHP Version Require](https://poser.pugx.org/vildanbina/laravel-model-json/require/php)](https://packagist.org/packages/vildanbina/laravel-model-json)
 
 ## Introduction
 
