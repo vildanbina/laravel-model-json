@@ -76,6 +76,23 @@ If a model has a large number of columns and you only want to export a subset of
 php artisan model:export User --only-fields=name,email
 ```
 
+### Apply a specific scope to the query
+
+If you wish to apply a scope to the model query because you wish to exclude certain records, you can use the `--scope={scope}` option. This allows you to specify a scope for the records you want to include in the export. For example:
+
+```bash
+php artisan model:export User --scope=verified
+```
+
+On your User Model you would have the following function:
+
+```php
+    public function scopeVerified(Builder $query): void
+    {
+        $query->whereNotNull('email_verified_at');
+    }
+```
+
 ### Relationships
 
 You can now export models along with their specified relationships using the new option `--with-relationships={relations}`. `{relations}` are the names of the relationships and can be separated by `+` symbol if you want to attach more than one relationship.
