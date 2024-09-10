@@ -2,7 +2,7 @@
 
 namespace Vildanbina\ModelJson\Traits;
 
-use http\Exception\BadMethodCallException;
+use BadMethodCallException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
