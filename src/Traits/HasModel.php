@@ -46,15 +46,15 @@ trait HasModel
     }
 
     /**
-     * @param  string  $scope
+     * @param  ?string  $scope
      *
      * @return $this
      */
-    public function setScope(string $scope): static
+    public function setScope(?string $scope): static
     {
         $this->scope = $scope;
 
-        if (!method_exists($this->model, 'scope'.ucfirst($this->scope))) {
+        if (!is_null($this->scope) && !method_exists($this->model, 'scope'.ucfirst($this->scope))) {
             throw new BadMethodCallException('Scope ' . $this->scope . ' does not exists.');
         }
 
