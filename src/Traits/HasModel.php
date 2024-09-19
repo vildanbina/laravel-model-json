@@ -54,10 +54,6 @@ trait HasModel
     {
         $this->scope = $scope;
 
-        if (!is_null($this->scope) && !method_exists($this->model, 'scope'.ucfirst($this->scope))) {
-            throw new BadMethodCallException('Scope ' . $this->scope . ' does not exists.');
-        }
-
         return $this;
     }
 
@@ -78,7 +74,7 @@ trait HasModel
             ->when(filled($relations = $this->getRelationships()), function (Builder $builder) use ($relations) {
                 $builder->with($relations);
             })
-            ->when(!is_null($scope = $this->scope), function (Builder $builder) use ($scope) {
+            ->when(filled($scope = $this->scope), function (Builder $builder) use ($scope) {
                 $builder->$scope();
             });
     }
