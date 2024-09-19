@@ -2,6 +2,7 @@
 
 namespace Vildanbina\ModelJson\Traits;
 
+use BadMethodCallException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,6 +19,11 @@ trait HasModel
      * @var string
      */
     protected string $model;
+
+    /**
+     * @var ?string
+     */
+    protected ?string $scope = null;
 
     /**
      * @param  string  $model
@@ -40,6 +46,18 @@ trait HasModel
     }
 
     /**
+     * @param  ?string  $scope
+     *
+     * @return $this
+     */
+    public function setScope(?string $scope): static
+    {
+        $this->scope = $scope;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getTotalModelsCount(): int
@@ -55,6 +73,9 @@ trait HasModel
         return $this->model::query()
             ->when(filled($relations = $this->getRelationships()), function (Builder $builder) use ($relations) {
                 $builder->with($relations);
+            })
+            ->when(filled($scope = $this->scope), function (Builder $builder) use ($scope) {
+                $builder->$scope();
             });
     }
 }

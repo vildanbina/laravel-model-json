@@ -35,6 +35,7 @@ class ExportModelData extends BaseCommand
 
         $exportService = ExportService::make()
             ->setModel($modelClass)
+            ->setScope($this->option('scope'))
             ->setFilename($this->option('filename'))
             ->setPath($this->option('path'))
             ->setExceptColumns($this->option('except-fields'))
@@ -79,6 +80,7 @@ class ExportModelData extends BaseCommand
             ['without-timestamps', null, InputOption::VALUE_NONE, 'Export without: created_at, updated_at and deleted_at columns'],
             ['beautify', '-b', InputOption::VALUE_NONE, 'Beautify JSON'],
             ['with-relationships', null, InputOption::VALUE_OPTIONAL, 'Relationships to include (plus-separator)'],
+            ['scope', null, InputOption::VALUE_OPTIONAL, 'Scope you wish to apply to the query'],
         ];
     }
 }
