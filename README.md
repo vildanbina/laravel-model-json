@@ -68,6 +68,24 @@ To exclude the `created_at`, `updated_at`, and `deleted_at` columns from the exp
 php artisan model:export User --without-timestamps
 ```
 
+### Without global scopes
+
+You can remove registered global scopes from the export with the `--without-global-scopes` option. For example:
+
+```bash
+php artisan model:export User --without-global-scopes
+```
+
+### With hidden
+
+By default, only visible fields are included in the export. To also include all hidden fields in the export, use the `--with-hidden` option. For example:
+
+```bash
+php artisan model:export User --with-hidden
+```
+
+This will also apply to any included relation(s) if used in combination with the `--with-relationships` option.
+
 ### Select only specific fields
 
 If a model has a large number of columns and you only want to export a subset of them, you can use the `--only-fields` option. This allows you to specify which columns you want to include in the export. For example:
