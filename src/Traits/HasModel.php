@@ -16,7 +16,7 @@ use LogicException;
 trait HasModel
 {
     /**
-     * @var string
+     * @var class-string<Model>
      */
     protected string $model;
 

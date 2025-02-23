@@ -40,6 +40,7 @@ class ExportModelData extends BaseCommand
             ->setPath($this->option('path'))
             ->setExceptColumns($this->option('except-fields'))
             ->setOnlyColumns($this->option('only-fields'))
+            ->setForgetData($this->option('forget-data'))
             ->withoutTimestamps($this->option('without-timestamps'))
             ->setRelationships($this->option('with-relationships'))
             ->beautifyJson($this->option('beautify') ?: false)
@@ -77,6 +78,7 @@ class ExportModelData extends BaseCommand
             ['filename', null, InputOption::VALUE_OPTIONAL, 'Filename of JSON file'],
             ['except-fields', null, InputOption::VALUE_OPTIONAL, 'Columns that you do not want to save in the JSON file.'],
             ['only-fields', null, InputOption::VALUE_OPTIONAL, 'Only columns that you want to save in a JSON file.'],
+            ['forget-data', null, InputOption::VALUE_OPTIONAL, 'Keys that you want to remove from the JSON data. Comma-separated, supporting dot notation.'],
             ['without-timestamps', null, InputOption::VALUE_NONE, 'Export without: created_at, updated_at and deleted_at columns'],
             ['beautify', '-b', InputOption::VALUE_NONE, 'Beautify JSON'],
             ['with-relationships', null, InputOption::VALUE_OPTIONAL, 'Relationships to include (plus-separator)'],

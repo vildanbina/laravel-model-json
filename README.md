@@ -76,6 +76,18 @@ If a model has a large number of columns and you only want to export a subset of
 php artisan model:export User --only-fields=name,email
 ```
 
+### Forget data
+
+You can forget data from the export by using the dot notation, accepting wildcards using asterisks. For example:
+
+```bash
+php artisan model:export Post --forget-data=comments.*.moderated_at
+```
+
+This can be useful if you include relations with the `--with-relationships` option and you would like to remove `chaperone()`'d relations from the nested data.
+
+The `--forget-data` option supports one or more keys, comma separated.
+
 ### Apply a specific scope to the query
 
 If you wish to apply a scope to the model query because you wish to exclude certain records, you can use the `--scope={scope}` option. This allows you to specify a scope for the records you want to include in the export. For example:
@@ -168,6 +180,16 @@ If you only want to store specific fields, you can use the `--only-fields` optio
 ```bash
 php artisan model:import User public/Users.json --only-fields=first_name,last_name,email
 ```
+
+## Forget data
+
+You can forget data from the import by using the dot notation, accepting wildcards using asterisks. For example:
+
+```bash
+php artisan model:import Post public/Posts.json --forget-data=comments.*.moderated_at
+```
+
+The `--forget-data` option supports one or more keys, comma separated.
 
 ## Update existing records
 

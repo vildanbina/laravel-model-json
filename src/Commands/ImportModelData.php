@@ -38,6 +38,7 @@ class ImportModelData extends BaseCommand
             ->setPath($this->argument('path'))
             ->setExceptColumns($this->option('except-fields'))
             ->setOnlyColumns($this->option('only-fields'))
+            ->setForgetData($this->option('forget-data'))
             ->updateWhenExists($this->option('update-when-exists'))
             ->updateKeys($this->option('update-keys'))
             ->withoutTimestamps($this->option('without-timestamps'))
@@ -77,6 +78,7 @@ class ImportModelData extends BaseCommand
             ['update-keys', null, InputOption::VALUE_OPTIONAL, 'Attributes of the model used to check if a record exists.'],
             ['except-fields', null, InputOption::VALUE_OPTIONAL, 'Columns that you do not want to save in the JSON file.'],
             ['only-fields', null, InputOption::VALUE_OPTIONAL, 'Only columns that you want to save in a JSON file.'],
+            ['forget-data', null, InputOption::VALUE_OPTIONAL, 'Keys that you want to remove from the JSON data. Comma-separated, supporting dot notation.'],
             ['without-timestamps', null, InputOption::VALUE_NONE, 'Export without: created_at, updated_at and deleted_at columns'],
             ['with-relationships', null, InputOption::VALUE_OPTIONAL, 'Relationships to include (plus-separator)'],
         ];

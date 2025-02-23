@@ -2,8 +2,9 @@
 
 namespace Vildanbina\ModelJson\Services;
 
-use Arr;
+use Illuminate\Support\Arr;
 use Vildanbina\ModelJson\Traits\ColumnManipulator;
+use Vildanbina\ModelJson\Traits\DataManipulator;
 use Vildanbina\ModelJson\Traits\EachClosure;
 use Vildanbina\ModelJson\Traits\HasDestinationPath;
 use Vildanbina\ModelJson\Traits\HasFilename;
@@ -21,6 +22,7 @@ class ImportService extends JsonService
     use HasFilename;
     use HasDestinationPath;
     use ColumnManipulator;
+    use DataManipulator;
     use ImportingWithRelationships;
     use EachClosure;
 
@@ -70,10 +72,14 @@ class ImportService extends JsonService
     {
         $data = $this->getJsonAsArray();
 
-        Arr::map(Arr::wrap($data), function ($item) {
+        Arr::map(Arr::wrap($data), function (array $item) {
             $item = filled($this->onlyColumns) ?
                 Arr::only($item, $this->onlyColumns) :
                 Arr::except($item, $this->exceptColumns);
+
+            collect($this->forgetKeys)->each(function (string|array|int $key) use (&$item) {
+                data_forget($item, $key);
+            });
 
             if ($this->withoutTimestamps) {
                 $item = Arr::except($item, static::$timestampsField);
