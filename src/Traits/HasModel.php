@@ -26,6 +26,11 @@ trait HasModel
     protected ?string $scope = null;
 
     /**
+     * @var bool
+     */
+    protected bool $withoutGlobalScopes = false;
+
+    /**
      * @param  string  $model
      *
      * @return $this
@@ -57,6 +62,13 @@ trait HasModel
         return $this;
     }
 
+    public function withoutGlobalScopes(bool $withoutGlobalScopes = true): static
+    {
+        $this->withoutGlobalScopes = $withoutGlobalScopes;
+
+        return $this;
+    }
+
     /**
      * @return int
      */
@@ -71,6 +83,9 @@ trait HasModel
     protected function modelQuery(): Builder
     {
         return $this->model::query()
+            ->when($this->withoutGlobalScopes, function (Builder $builder) {
+                $builder->withoutGlobalScopes();
+            })
             ->when(filled($relations = $this->getRelationships()), function (Builder $builder) use ($relations) {
                 $builder->with($relations);
             })

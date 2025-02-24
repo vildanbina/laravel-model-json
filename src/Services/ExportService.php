@@ -2,7 +2,8 @@
 
 namespace Vildanbina\ModelJson\Services;
 
-use Arr;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Vildanbina\ModelJson\Traits\ColumnManipulator;
 use Vildanbina\ModelJson\Traits\DataManipulator;
 use Vildanbina\ModelJson\Traits\EachClosure;
@@ -49,10 +50,10 @@ class ExportService extends JsonService
     {
         $data = [];
 
-        $this->modelQuery()->chunkMap(function ($model) use (&$data) {
+        $this->modelQuery()->chunkMap(function (Model $model) use (&$data) {
             $value = filled($this->onlyColumns) ?
-                Arr::only($model->toArray(), $this->onlyColumns) :
-                Arr::except($model->toArray(), $this->exceptColumns);
+                Arr::only($this->serialize($model), $this->onlyColumns) :
+                Arr::except($this->serialize($model), $this->exceptColumns);
 
             if ($this->withoutTimestamps) {
                 $value = Arr::except($value, static::$timestampsField);

@@ -17,15 +17,16 @@ class ExportModelData extends BaseCommand
      * @var string
      */
     protected $name = 'model:export';
+
     /**
      * @var string
      */
     protected $description = 'Export any Model\'s data into JSON.';
 
     /**
-     * @return int|mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $modelClass = $this->qualifyModel($this->argument('model'));
 
@@ -42,6 +43,8 @@ class ExportModelData extends BaseCommand
             ->setOnlyColumns($this->option('only-fields'))
             ->setForgetData($this->option('forget-data'))
             ->withoutTimestamps($this->option('without-timestamps'))
+            ->withoutGlobalScopes($this->option('without-global-scopes'))
+            ->withHidden($this->option('with-hidden'))
             ->setRelationships($this->option('with-relationships'))
             ->beautifyJson($this->option('beautify') ?: false)
             ->onEach(function () {
@@ -55,7 +58,7 @@ class ExportModelData extends BaseCommand
 
         $this->output->success('Your model\'s JSON data has been saved to "' . $path . '"');
 
-        return Command::SUCCESS;
+        return static::SUCCESS;
     }
 
     /**
@@ -80,6 +83,8 @@ class ExportModelData extends BaseCommand
             ['only-fields', null, InputOption::VALUE_OPTIONAL, 'Only columns that you want to save in a JSON file.'],
             ['forget-data', null, InputOption::VALUE_OPTIONAL, 'Keys that you want to remove from the JSON data. Comma-separated, supporting dot notation.'],
             ['without-timestamps', null, InputOption::VALUE_NONE, 'Export without: created_at, updated_at and deleted_at columns'],
+            ['without-global-scopes', null, InputOption::VALUE_NONE, 'Export without global scopes'],
+            ['with-hidden', null, InputOption::VALUE_NONE, 'Export including all hidden columns'],
             ['beautify', '-b', InputOption::VALUE_NONE, 'Beautify JSON'],
             ['with-relationships', null, InputOption::VALUE_OPTIONAL, 'Relationships to include (plus-separator)'],
             ['scope', null, InputOption::VALUE_OPTIONAL, 'Scope you wish to apply to the query'],

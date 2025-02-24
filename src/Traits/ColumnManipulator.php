@@ -2,6 +2,9 @@
 
 namespace Vildanbina\ModelJson\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+
 /**
  * Trait ColumnManipulator
  *
@@ -17,27 +20,48 @@ trait ColumnManipulator
         'updated_at',
         'deleted_at',
     ];
+
     /**
      * @var bool
      */
     protected bool $withoutTimestamps = false;
+
+    /**
+     * @var bool
+     */
+    protected bool $withHidden = false;
+
     /**
      * @var array
      */
     protected array $exceptColumns = [];
+
     /**
      * @var array
      */
     protected array $onlyColumns = [];
 
     /**
-     * @param  bool|null  $withoutTimestamps
+     * @param  bool  $withoutTimestamps
      *
      * @return $this
      */
-    public function withoutTimestamps(null|bool $withoutTimestamps = true): static
+    public function withoutTimestamps(bool $withoutTimestamps = true): static
     {
-        $this->withoutTimestamps = boolval($withoutTimestamps);
+        $this->withoutTimestamps = $withoutTimestamps;
+
+        return $this;
+    }
+
+    /**
+     * @param  bool  $withHidden
+     *
+     * @return $this
+     */
+    public function withHidden(bool $withHidden = true): static
+    {
+        $this->withHidden = $withHidden;
+
         return $this;
     }
 
@@ -75,5 +99,29 @@ trait ColumnManipulator
         }
 
         return $this;
+    }
+
+    protected function serialize(Model $model): array
+    {
+        if (! $this->withHidden) {
+            return $model->toArray();
+        }
+
+        $makeVisible = fn (Model $m) => $m->makeVisible($m->getHidden());
+
+        return $model
+            ->makeVisible($model->getHidden())
+            ->setRelations(
+                collect($model->getRelations())
+                    ->mapWithKeys(fn ($relation, string $relationName) => [
+                        $relationName => match (true) {
+                            $relation instanceof Model => $makeVisible($relation),
+                            $relation instanceof Collection => $relation->map($makeVisible),
+                            default => $relation,
+                        },
+                    ])
+                    ->all()
+            )
+            ->toArray();
     }
 }
