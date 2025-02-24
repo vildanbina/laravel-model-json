@@ -114,12 +114,27 @@ If you wish to apply a scope to the model query because you wish to exclude cert
 php artisan model:export User --scope=verified
 ```
 
-On your User Model you would have the following function:
+On your `User` model you would have the following method:
 
 ```php
     public function scopeVerified(Builder $query): void
     {
         $query->whereNotNull('email_verified_at');
+    }
+```
+
+The `--scope` option also supports one or more arguments to be passed to the scope, comma separated. For example:
+
+```bash
+php artisan model:export User --scope=byEmail,foo@example.com
+```
+
+On your `User` model you would have the following method:
+
+```php
+    public function scopeByEmail(Builder $query, string $email): void
+    {
+        $query->where('email', $email);
     }
 ```
 

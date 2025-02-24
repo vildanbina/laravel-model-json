@@ -90,7 +90,9 @@ trait HasModel
                 $builder->with($relations);
             })
             ->when(filled($scope = $this->scope), function (Builder $builder) use ($scope) {
-                $builder->$scope();
+                $args = explode(',', $scope);
+                $scopeName = array_shift($args);
+                empty($args) ? $builder->$scopeName() : $builder->$scopeName(...$args);
             });
     }
 }
